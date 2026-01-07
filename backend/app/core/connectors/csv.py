@@ -195,7 +195,7 @@ class CSVConnector(DataConnector):
         self,
         table_name: str,
         schema_name: Optional[str] = None,
-        limit: int = 100
+        limit: Optional[int] = 100
     ) -> pd.DataFrame:
         """
         Preview data from the CSV file.
@@ -203,7 +203,7 @@ class CSVConnector(DataConnector):
         Args:
             table_name: Name of the table (ignored for CSV)
             schema_name: Schema name (not applicable for CSV)
-            limit: Maximum number of rows to return
+            limit: Maximum number of rows to return (None = all rows)
 
         Returns:
             Pandas DataFrame with preview data
@@ -211,12 +211,14 @@ class CSVConnector(DataConnector):
         if not self._connection:
             await self.connect()
 
+        # Build query with optional limit
+        limit_clause = f"LIMIT {limit}" if limit is not None else ""
         query = f"""
             SELECT * FROM read_csv_auto(
                 '{self.file_path}',
                 delim='{self.delimiter}',
                 header={str(self.has_header).lower()}
-            ) LIMIT {limit}
+            ) {limit_clause}
         """
 
         result = self._connection.execute(query)

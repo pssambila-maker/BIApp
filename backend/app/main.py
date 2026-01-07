@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.db.session import init_db, close_db
-from app.api import auth, data_sources
+from app.api import auth, data_sources, transformations
 
 
 @asynccontextmanager
@@ -57,6 +57,7 @@ async def global_exception_handler(request, exc):
 # Include routers
 app.include_router(auth.router, prefix="/api")
 app.include_router(data_sources.router, prefix="/api")
+app.include_router(transformations.router, prefix="/api")
 
 
 # Health check endpoint

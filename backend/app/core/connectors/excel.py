@@ -181,7 +181,7 @@ class ExcelConnector(DataConnector):
         self,
         table_name: str,
         schema_name: Optional[str] = None,
-        limit: int = 100
+        limit: Optional[int] = 100
     ) -> pd.DataFrame:
         """
         Preview data from an Excel sheet.
@@ -189,7 +189,7 @@ class ExcelConnector(DataConnector):
         Args:
             table_name: Name of the sheet
             schema_name: Schema name (not applicable for Excel)
-            limit: Maximum number of rows to return
+            limit: Maximum number of rows to return (None = all rows)
 
         Returns:
             Pandas DataFrame with preview data
