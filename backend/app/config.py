@@ -52,7 +52,7 @@ class Settings(BaseSettings):
     query_cache_max_size_mb: int = 100
 
     # CORS
-    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+    cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173"
 
     # Rate Limiting
     rate_limit_per_minute: int = 100
