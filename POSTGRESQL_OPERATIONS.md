@@ -2,6 +2,13 @@
 
 This guide covers common PostgreSQL operations for the BI Platform.
 
+## Quick Access Links
+
+- **BI Platform**: [http://localhost:3000](http://localhost:3000)
+- **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Semantic Catalog**: [http://localhost:3000/catalog](http://localhost:3000/catalog)
+- **Query Builder**: [http://localhost:3000/query-builder](http://localhost:3000/query-builder)
+
 ## Table of Contents
 - [Connection Information](#connection-information)
 - [Reset Superuser Password](#reset-superuser-password)

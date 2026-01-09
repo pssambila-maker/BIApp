@@ -2,6 +2,8 @@
 
 Complete guide to creating and managing semantic catalogs in the BI Platform.
 
+**Access the Semantic Catalog**: [http://localhost:3000/catalog](http://localhost:3000/catalog)
+
 ## Table of Contents
 - [What is a Semantic Catalog?](#what-is-a-semantic-catalog)
 - [Architecture Overview](#architecture-overview)
@@ -285,9 +287,11 @@ session.add(ds_table)
 
 ## Query Builder Usage
 
+**Access the Query Builder**: [http://localhost:3000/query-builder](http://localhost:3000/query-builder)
+
 ### Building a Query
 
-1. Navigate to **Query Builder** page
+1. Navigate to **Query Builder** page at [http://localhost:3000/query-builder](http://localhost:3000/query-builder)
 2. **Select Entity** from dropdown
 3. **Select Dimensions** for grouping (e.g., Region, Category)
 4. **Select Measures** to calculate (e.g., Total Sales, Count)
@@ -563,9 +567,21 @@ Located in `backend/app/models/semantic.py`:
 
 ---
 
+## Quick Access Links
+
+### BI Platform Pages
+- **Frontend Home**: [http://localhost:3000](http://localhost:3000)
+- **Semantic Catalog**: [http://localhost:3000/catalog](http://localhost:3000/catalog)
+- **Query Builder**: [http://localhost:3000/query-builder](http://localhost:3000/query-builder)
+- **Data Sources**: [http://localhost:3000/data-sources](http://localhost:3000/data-sources)
+
+### Backend API
+- **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **API Base URL**: [http://localhost:8000/api](http://localhost:8000/api)
+
 ## Additional Resources
 
-- [PostgreSQL Operations Guide](POSTGRESQL_OPERATIONS.md)
-- [Admin User Management Guide](ADMIN_USER_MANAGEMENT.md)
-- [Chart Visualization Testing](CHART_VISUALIZATION_TESTING.md)
-- Main README for setup instructions
+- **[PostgreSQL Operations Guide](POSTGRESQL_OPERATIONS.md)** - Database management and operations
+- **[Admin User Management Guide](ADMIN_USER_MANAGEMENT.md)** - User administration
+- **[Chart Visualization Testing](CHART_VISUALIZATION_TESTING.md)** - Testing visualizations
+- **[Main README](README.md)** - Setup and installation instructions

@@ -285,6 +285,16 @@ Key environment variables in `.env`:
 
 MIT License
 
+## Quick Access Links
+
+### Application URLs
+- **Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Backend API**: [http://localhost:8000](http://localhost:8000)
+- **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Semantic Catalog**: [http://localhost:3000/catalog](http://localhost:3000/catalog)
+- **Query Builder**: [http://localhost:3000/query-builder](http://localhost:3000/query-builder)
+- **Data Sources**: [http://localhost:3000/data-sources](http://localhost:3000/data-sources)
+
 ## Documentation
 
 Comprehensive guides for common operations:
