@@ -285,6 +285,44 @@ Key environment variables in `.env`:
 
 MIT License
 
+## Documentation
+
+Comprehensive guides for common operations:
+
+- **[PostgreSQL Operations Guide](POSTGRESQL_OPERATIONS.md)** - Database setup, user management, password reset, loading CSV data
+- **[Semantic Catalog Guide](SEMANTIC_CATALOG_GUIDE.md)** - Creating entities, dimensions, measures, and using the Query Builder
+- **[Admin User Management](ADMIN_USER_MANAGEMENT.md)** - User administration and permissions
+- **[Chart Visualization Testing](CHART_VISUALIZATION_TESTING.md)** - Testing chart features
+- **[Phase 4 Testing Guide](PHASE4_TESTING_GUIDE.md)** - Comprehensive testing procedures
+- **[Quick Admin Guide](QUICK_ADMIN_GUIDE.md)** - Quick reference for administrators
+
+## Current Status
+
+✅ **Completed Phases**:
+- Phase 1: Enterprise BI Platform Backend (Auth, RBAC, Data Sources)
+- Phase 2: Data Collection Layer (CSV, Excel, PostgreSQL connectors)
+- Phase 3: Data Transformation Engine (Visual pipeline system)
+- Phase 5 & 6: Frontend with Query Builder
+- Phase 8a: Data Visualization (Chart types, export functionality)
+
+🚧 **In Progress**:
+- Semantic catalog enhancements
+- Additional data source types
+- Advanced chart configurations
+
+## Sample Data
+
+The project includes sample data loaded in PostgreSQL:
+
+1. **Superstore Dataset** (9,994 rows)
+   - Table: `superstore`
+   - Contains: Orders, customers, products, sales metrics
+   - Columns: order_id, customer_name, product_name, sales, profit, quantity, discount, etc.
+
+2. **Sales Data Q1 2024** (CSV)
+   - Sample sales transactions
+   - Used for Customer and Product entities
+
 ## Support
 
 For issues and questions, please open an issue on GitHub.

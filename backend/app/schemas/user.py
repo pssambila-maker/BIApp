@@ -45,3 +45,25 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     """Schema for decoded token data."""
     user_id: Optional[UUID] = None
+
+
+class UserUpdate(BaseModel):
+    """Schema for updating user information."""
+    username: Optional[str] = Field(None, min_length=3, max_length=100)
+    email: Optional[EmailStr] = None
+    full_name: Optional[str] = Field(None, max_length=255)
+    is_active: Optional[bool] = None
+    is_superuser: Optional[bool] = None
+
+
+class PasswordReset(BaseModel):
+    """Schema for password reset."""
+    new_password: str = Field(..., min_length=8, max_length=100)
+
+
+class UserListResponse(BaseModel):
+    """Schema for paginated user list response."""
+    users: list[UserResponse]
+    total: int
+    skip: int
+    limit: int

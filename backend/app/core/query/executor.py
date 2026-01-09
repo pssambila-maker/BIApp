@@ -81,7 +81,7 @@ class QueryExecutor:
         Raises:
             Exception: If query execution fails
         """
-        connector = await get_connector(data_source, db)
+        connector = get_connector(data_source)
 
         # For parameterized queries, we need to replace :param with actual values
         # This is connector-specific - some use %s, some use ?, some use :name

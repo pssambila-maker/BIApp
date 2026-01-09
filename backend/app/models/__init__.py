@@ -3,6 +3,8 @@ from app.models.user import User, Role, UserRole, UserSession
 from app.models.data_source import DataSource, DataSourceTable
 from app.models.transformation import TransformationPipeline, TransformationStep, PipelineRun
 from app.models.semantic import SemanticEntity, SemanticDimension, SemanticMeasure
+from app.models.saved_query import SavedQuery
+from app.models.query_history import QueryHistory
 
 __all__ = [
     "User",
@@ -17,4 +19,6 @@ __all__ = [
     "SemanticEntity",
     "SemanticDimension",
     "SemanticMeasure",
+    "SavedQuery",
+    "QueryHistory",
 ]
