@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.db.session import init_db, close_db
-from app.api import auth, data_sources, transformations, semantic, query_builder, saved_queries, users, dashboards
+from app.api import auth, data_sources, transformations, semantic, query_builder, saved_queries, users, dashboards, scheduled_reports, email_config
 
 
 @asynccontextmanager
@@ -63,6 +63,8 @@ app.include_router(semantic.router, prefix="/api")
 app.include_router(query_builder.router, prefix="/api")
 app.include_router(saved_queries.router, prefix="/api")
 app.include_router(dashboards.router, prefix="/api")
+app.include_router(scheduled_reports.router, prefix="/api")
+app.include_router(email_config.router, prefix="/api")
 
 
 # Health check endpoint
