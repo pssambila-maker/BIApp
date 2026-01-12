@@ -360,7 +360,50 @@ Supported connectors:
 - Save queries for reuse
 - Share dashboards with team members
 
-### 8. 👥 **User Management** (Admin)
+### 8. 📧 **Scheduled Reports & Alerts** (Backend Complete)
+**Status**: Backend fully implemented, Frontend UI coming in Week 4
+
+Automate report delivery and data monitoring:
+- **Scheduled Reports**: Automatically email reports on daily/weekly/monthly schedules
+  - Generate Excel, CSV, PDF file attachments
+  - Send to multiple recipients
+  - Track execution history (success/failed/partial status)
+  - Manual trigger or automated via Celery Beat
+- **Email Configuration**: Secure SMTP setup with encrypted passwords
+  - Gmail, Outlook, Office365, Yahoo presets
+  - Custom SMTP support
+  - Test connection before scheduling
+- **Execution Tracking**: Detailed audit trail for every report run
+  - Status monitoring, error messages, file paths
+  - Row counts and execution time metrics
+  - Download generated files from history
+
+**Backend APIs** (Available Now):
+- `POST /api/email-config` - Configure SMTP settings
+- `POST /api/scheduled-reports` - Create scheduled report
+- `POST /api/scheduled-reports/{id}/run` - Manual trigger (queues Celery task)
+- `POST /api/scheduled-reports/{id}/test` - Test send to your email
+- `GET /api/scheduled-reports/{id}/executions` - View execution history
+
+**How It Works**:
+1. Configure email settings (SMTP credentials encrypted)
+2. Create report from dashboard or saved query
+3. Choose schedule (daily/weekly/monthly + time)
+4. Add recipients and select formats (Excel, CSV, PDF)
+5. Report runs automatically via Celery worker
+6. Recipients receive email with attachments
+7. View execution history and download files
+
+**Technical Details**:
+- Celery + Redis for background task processing
+- Celery Beat runs scheduler every 5 minutes
+- 3-level error handling (success/failed/partial)
+- Async/sync bridging for database operations
+- Fernet encryption for SMTP passwords
+
+**See**: [WEEK3_DAY2_SUMMARY.md](WEEK3_DAY2_SUMMARY.md) for implementation details
+
+### 9. 👥 **User Management** (Admin)
 - Create and manage user accounts
 - Assign roles and permissions (Admin, Analyst, Viewer)
 - Track user sessions and activity
@@ -368,7 +411,7 @@ Supported connectors:
 
 **Admin Access**: [http://localhost:8000/docs](http://localhost:8000/docs) → Use `/api/users` endpoints
 
-### 9. 🔍 **Sample Data Available**
+### 10. 🔍 **Sample Data Available**
 The app comes with the **Superstore dataset** (9,994 rows) pre-loaded:
 - Order data with customer, product, sales metrics
 - Multiple semantic entities configured
@@ -390,13 +433,19 @@ The app comes with the **Superstore dataset** (9,994 rows) pre-loaded:
 
 Comprehensive guides for common operations:
 
+### User Guides
+- **[User Manual](USER_MANUAL.md)** - Complete user guide for all features (dashboards, queries, reports, alerts)
 - **[PostgreSQL Operations Guide](POSTGRESQL_OPERATIONS.md)** - Database setup, user management, password reset, loading CSV data
 - **[Semantic Catalog Guide](SEMANTIC_CATALOG_GUIDE.md)** - Creating entities, dimensions, measures, and using the Query Builder
 - **[Chart Sorting and Colors Guide](CHART_SORTING_AND_COLORS_GUIDE.md)** - Sorting charts and applying conditional colors like Tableau Desktop
 - **[Admin User Management](ADMIN_USER_MANAGEMENT.md)** - User administration and permissions
+- **[Quick Admin Guide](QUICK_ADMIN_GUIDE.md)** - Quick reference for administrators
+
+### Testing & Development
 - **[Chart Visualization Testing](CHART_VISUALIZATION_TESTING.md)** - Testing chart features
 - **[Phase 4 Testing Guide](PHASE4_TESTING_GUIDE.md)** - Comprehensive testing procedures
-- **[Quick Admin Guide](QUICK_ADMIN_GUIDE.md)** - Quick reference for administrators
+- **[Week 3 Plan](WEEK3_PLAN.md)** - Scheduled reports implementation plan
+- **[Week 3 Day 2 Summary](WEEK3_DAY2_SUMMARY.md)** - Celery tasks implementation details
 
 ## Current Status
 
@@ -409,15 +458,19 @@ Comprehensive guides for common operations:
 - Phase 7: Dashboard Builder (Multi-widget dashboards with drag-and-drop)
 - Phase 8: Data Visualization (10+ chart types, sorting, conditional colors, export)
 
-🚧 **In Progress** (Week 2 of 8 Completed):
+🚧 **In Progress** (Week 3 Day 2 of 8 Completed):
 - Phase 9: Scheduled Reports & Alerts
   - ✅ Week 1: Database models (ScheduledReport, Alert, EmailConfiguration, ReportExecution, AlertExecution)
   - ✅ Week 1: Celery + Redis task queue configured and tested
   - ✅ Week 2: Services layer (ScheduleService, ReportService, EmailService, EncryptionService)
   - ✅ Week 2: Report generation (Excel, CSV, PDF with styling)
   - ✅ Week 2: Email delivery with SMTP and encryption
-  - 🔄 Week 3: API endpoints and Pydantic schemas (Next)
-  - 📋 Week 4-8: Celery task implementation and frontend UI
+  - ✅ Week 3 Day 1: API endpoints and Pydantic schemas (email config, scheduled reports CRUD)
+  - ✅ Week 3 Day 2: Celery tasks (run_scheduled_report_task, check_and_run_scheduled_reports)
+  - ✅ Week 3 Day 2: Async/sync bridging, execution tracking, error handling (3 levels)
+  - ✅ Week 3 Day 2: Testing infrastructure (Celery worker, Redis, integration tests)
+  - 🔄 Week 3 Day 3: Live testing and validation (Next - 2-3 hours)
+  - 📋 Week 4-8: Frontend UI and alerts implementation
 
 ## Sample Data
 
