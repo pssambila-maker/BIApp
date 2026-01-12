@@ -33,6 +33,27 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan"
     )
+    dashboards: Mapped[list["Dashboard"]] = relationship(
+        "Dashboard",
+        back_populates="owner",
+        cascade="all, delete-orphan"
+    )
+    scheduled_reports: Mapped[list["ScheduledReport"]] = relationship(
+        "ScheduledReport",
+        back_populates="owner",
+        cascade="all, delete-orphan"
+    )
+    alerts: Mapped[list["Alert"]] = relationship(
+        "Alert",
+        back_populates="owner",
+        cascade="all, delete-orphan"
+    )
+    email_config: Mapped[Optional["EmailConfiguration"]] = relationship(
+        "EmailConfiguration",
+        back_populates="owner",
+        uselist=False,
+        cascade="all, delete-orphan"
+    )
 
     def __repr__(self) -> str:
         return f"<User(username={self.username}, email={self.email})>"

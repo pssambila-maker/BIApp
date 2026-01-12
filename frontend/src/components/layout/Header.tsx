@@ -1,5 +1,5 @@
 import { Layout, Menu, Dropdown, Avatar, Space } from 'antd';
-import { DatabaseOutlined, FundOutlined, CodeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, FundOutlined, CodeOutlined, DashboardOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 
@@ -46,8 +46,9 @@ export default function Header() {
           onClick={({ key }) => navigate(`/${key}`)}
           items={[
             { key: 'catalog', icon: <DatabaseOutlined />, label: 'Semantic Catalog' },
-            { key: 'data-sources', icon: <FundOutlined />, label: 'Data Sources' },
+            { key: 'dashboards', icon: <DashboardOutlined />, label: 'Dashboards' },
             { key: 'query-builder', icon: <CodeOutlined />, label: 'Query Builder' },
+            { key: 'data-sources', icon: <FundOutlined />, label: 'Data Sources' },
           ]}
         />
       </div>

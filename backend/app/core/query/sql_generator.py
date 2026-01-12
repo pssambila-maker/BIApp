@@ -70,6 +70,9 @@ class SQLGenerator:
             if filter_cond.operator in ("IS NULL", "IS NOT NULL"):
                 where_parts.append(f"{dim.sql_column} {filter_cond.operator}")
             elif filter_cond.operator == "IN":
+                # Skip if value is None or empty list
+                if filter_cond.value is None or (isinstance(filter_cond.value, list) and len(filter_cond.value) == 0):
+                    continue
                 placeholders = ", ".join([
                     f":param_{i}_{j}"
                     for j in range(len(filter_cond.value))
@@ -78,6 +81,9 @@ class SQLGenerator:
                 for j, val in enumerate(filter_cond.value):
                     params[f"param_{i}_{j}"] = val
             else:
+                # Skip filter if value is None (empty in UI)
+                if filter_cond.value is None:
+                    continue
                 where_parts.append(
                     f"{dim.sql_column} {filter_cond.operator} :{param_name}"
                 )

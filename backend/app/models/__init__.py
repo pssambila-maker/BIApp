@@ -5,6 +5,10 @@ from app.models.transformation import TransformationPipeline, TransformationStep
 from app.models.semantic import SemanticEntity, SemanticDimension, SemanticMeasure
 from app.models.saved_query import SavedQuery
 from app.models.query_history import QueryHistory
+from app.models.dashboard import Dashboard, DashboardWidget
+from app.models.scheduled_report import ScheduledReport, ReportExecution
+from app.models.alert import Alert, AlertExecution
+from app.models.email_config import EmailConfiguration
 
 __all__ = [
     "User",
@@ -21,4 +25,11 @@ __all__ = [
     "SemanticMeasure",
     "SavedQuery",
     "QueryHistory",
+    "Dashboard",
+    "DashboardWidget",
+    "ScheduledReport",
+    "ReportExecution",
+    "Alert",
+    "AlertExecution",
+    "EmailConfiguration",
 ]

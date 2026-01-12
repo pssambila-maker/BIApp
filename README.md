@@ -7,8 +7,11 @@ A self-service BI platform built with Python (FastAPI) and React, featuring data
 - **Data Collection**: Connect to CSV, Excel, PostgreSQL, MySQL
 - **Data Transformation**: Visual pipeline for data prep
 - **Semantic Layer**: Define relationships, measures, and dimensions
-- **Interactive Analytics**: Drag-and-drop canvas with real-time visualizations
-- **Publishing & Sharing**: RBAC, exports (PDF, PNG, CSV), shareable dashboards
+- **Query Builder**: Drag-and-drop interface for building queries with filters
+- **Interactive Dashboards**: Create multi-widget dashboards with charts and visualizations
+- **Chart Visualizations**: 10+ chart types (bar, line, pie, scatter, etc.) with sorting and conditional colors
+- **Data Export**: Export to Excel, CSV, JSON formats
+- **Scheduled Reports & Alerts**: Automated report delivery and data monitoring (In Development)
 
 ## Tech Stack
 
@@ -17,8 +20,10 @@ A self-service BI platform built with Python (FastAPI) and React, featuring data
 - PostgreSQL (metadata storage)
 - DuckDB (analytical query engine)
 - Redis (caching and sessions)
+- Celery + Redis (background tasks and scheduling)
 - SQLAlchemy 2.0 (async ORM)
 - Alembic (database migrations)
+- Pandas + OpenPyXL (data processing and Excel export)
 
 ### Frontend
 - React 18 + TypeScript
@@ -285,14 +290,100 @@ Key environment variables in `.env`:
 
 MIT License
 
+## What You Can Do Right Now
+
+This is a fully functional Business Intelligence platform. Here's what you can do today:
+
+### 1. 📊 **Build Interactive Dashboards**
+- Create multi-widget dashboards with drag-and-drop layout
+- Add charts, tables, and visualizations to your dashboards
+- Configure global filters that affect all widgets
+- Save and share dashboards with other users
+
+**Try it**: [Dashboard Builder](http://localhost:3000/dashboards)
+
+### 2. 🔍 **Query Your Data**
+- Use the visual Query Builder to explore data without SQL
+- Drag dimensions and measures to build queries
+- Apply filters with operators (equals, contains, greater than, etc.)
+- View results in real-time with automatic chart generation
+- Export results to Excel, CSV, or JSON
+
+**Try it**: [Query Builder](http://localhost:3000/query-builder)
+
+### 3. 📈 **Create Visualizations**
+Available chart types:
+- Bar Chart (vertical/horizontal, grouped/stacked)
+- Line Chart (single/multi-series with area fill)
+- Pie Chart / Donut Chart
+- Scatter Plot with regression lines
+- Area Chart (stacked/overlapping)
+- Heatmap with color gradients
+- Gauge Chart for KPIs
+- Funnel Chart for conversion tracking
+
+**Features**:
+- Sort by any dimension or measure (ascending/descending)
+- Apply conditional colors based on value thresholds
+- Interactive tooltips and legends
+- Export charts as PNG or PDF
+
+**Try it**: Create a query, then switch between chart types
+
+### 4. 📚 **Build Semantic Models**
+- Define semantic entities from your data sources
+- Create reusable dimensions and measures
+- Configure aggregations (SUM, AVG, COUNT, MIN, MAX)
+- Add calculated fields with SQL expressions
+- Browse the semantic catalog to discover available data
+
+**Try it**: [Semantic Catalog](http://localhost:3000/catalog)
+
+### 5. 🔌 **Connect Data Sources**
+Supported connectors:
+- **CSV Files**: Upload local CSV files
+- **Excel Files**: Upload .xlsx files
+- **PostgreSQL**: Connect to Postgres databases
+- **MySQL**: Connect to MySQL databases
+
+**Try it**: [Data Sources](http://localhost:3000/data-sources)
+
+### 6. 🔄 **Transform Data**
+- Create visual transformation pipelines
+- Apply filters, joins, aggregations
+- Preview transformations in real-time
+- Save and reuse transformation workflows
+
+### 7. 📤 **Export and Share**
+- Export query results to Excel, CSV, JSON
+- Export charts as PNG images
+- Save queries for reuse
+- Share dashboards with team members
+
+### 8. 👥 **User Management** (Admin)
+- Create and manage user accounts
+- Assign roles and permissions (Admin, Analyst, Viewer)
+- Track user sessions and activity
+- Secure data access with row-level security
+
+**Admin Access**: [http://localhost:8000/docs](http://localhost:8000/docs) → Use `/api/users` endpoints
+
+### 9. 🔍 **Sample Data Available**
+The app comes with the **Superstore dataset** (9,994 rows) pre-loaded:
+- Order data with customer, product, sales metrics
+- Multiple semantic entities configured
+- Ready to explore with Query Builder
+- Perfect for testing dashboards and charts
+
 ## Quick Access Links
 
 ### Application URLs
 - **Frontend**: [http://localhost:3000](http://localhost:3000)
 - **Backend API**: [http://localhost:8000](http://localhost:8000)
 - **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
-- **Semantic Catalog**: [http://localhost:3000/catalog](http://localhost:3000/catalog)
+- **Dashboards**: [http://localhost:3000/dashboards](http://localhost:3000/dashboards)
 - **Query Builder**: [http://localhost:3000/query-builder](http://localhost:3000/query-builder)
+- **Semantic Catalog**: [http://localhost:3000/catalog](http://localhost:3000/catalog)
 - **Data Sources**: [http://localhost:3000/data-sources](http://localhost:3000/data-sources)
 
 ## Documentation
@@ -301,6 +392,7 @@ Comprehensive guides for common operations:
 
 - **[PostgreSQL Operations Guide](POSTGRESQL_OPERATIONS.md)** - Database setup, user management, password reset, loading CSV data
 - **[Semantic Catalog Guide](SEMANTIC_CATALOG_GUIDE.md)** - Creating entities, dimensions, measures, and using the Query Builder
+- **[Chart Sorting and Colors Guide](CHART_SORTING_AND_COLORS_GUIDE.md)** - Sorting charts and applying conditional colors like Tableau Desktop
 - **[Admin User Management](ADMIN_USER_MANAGEMENT.md)** - User administration and permissions
 - **[Chart Visualization Testing](CHART_VISUALIZATION_TESTING.md)** - Testing chart features
 - **[Phase 4 Testing Guide](PHASE4_TESTING_GUIDE.md)** - Comprehensive testing procedures
@@ -312,13 +404,17 @@ Comprehensive guides for common operations:
 - Phase 1: Enterprise BI Platform Backend (Auth, RBAC, Data Sources)
 - Phase 2: Data Collection Layer (CSV, Excel, PostgreSQL connectors)
 - Phase 3: Data Transformation Engine (Visual pipeline system)
+- Phase 4: Semantic Layer (Entities, Dimensions, Measures)
 - Phase 5 & 6: Frontend with Query Builder
-- Phase 8a: Data Visualization (Chart types, export functionality)
+- Phase 7: Dashboard Builder (Multi-widget dashboards with drag-and-drop)
+- Phase 8: Data Visualization (10+ chart types, sorting, conditional colors, export)
 
-🚧 **In Progress**:
-- Semantic catalog enhancements
-- Additional data source types
-- Advanced chart configurations
+🚧 **In Progress** (Week 1 of 8 Completed):
+- Phase 9: Scheduled Reports & Alerts
+  - ✅ Database models created (ScheduledReport, Alert, EmailConfiguration)
+  - ✅ Celery + Redis task queue configured
+  - 🔄 Services layer (report generation, email delivery, alert evaluation)
+  - 📋 API endpoints and frontend UI
 
 ## Sample Data
 

@@ -1,11 +1,13 @@
 import { useMemo, useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
-import { Card, Space, Alert, Empty } from 'antd';
+import { Card, Space, Alert, Empty, Divider } from 'antd';
 import { QueryResponse } from '@/types/queryBuilder';
 import { ChartConfiguration, ChartType } from '@/types/visualization';
 import { transformDataForECharts, validateChartConfig } from '../utils/chartUtils';
 import ChartTypeSelector from './ChartTypeSelector';
 import AxisConfigPanel from './AxisConfigPanel';
+import SortConfigPanel from './SortConfigPanel';
+import ColorConfigPanel from './ColorConfigPanel';
 
 interface Props {
   data: QueryResponse;
@@ -73,6 +75,22 @@ export default function ChartVisualization({ data, config, onConfigChange }: Pro
           config={config}
           onChange={onConfigChange}
         />
+
+        {chartType !== 'pie' && (
+          <>
+            <Divider style={{ margin: '16px 0' }} />
+            <div style={{ fontWeight: 'bold', marginBottom: 12 }}>Sorting:</div>
+            <SortConfigPanel config={config} onChange={onConfigChange} />
+
+            <Divider style={{ margin: '16px 0' }} />
+            <div style={{ fontWeight: 'bold', marginBottom: 12 }}>Colors:</div>
+            <ColorConfigPanel
+              config={config}
+              chartType={chartType}
+              onChange={onConfigChange}
+            />
+          </>
+        )}
       </Card>
 
       {/* Chart Display */}

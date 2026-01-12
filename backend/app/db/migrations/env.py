@@ -10,7 +10,13 @@ from alembic import context
 
 # Import your models here for autogeneration
 from app.db.base import Base
-from app.models import User, Role, UserRole, UserSession
+from app.models import (
+    User, Role, UserRole, UserSession,
+    Dashboard, DashboardWidget,
+    ScheduledReport, ReportExecution,
+    Alert, AlertExecution,
+    EmailConfiguration
+)
 from app.config import settings
 
 # this is the Alembic Config object, which provides
@@ -18,7 +24,9 @@ from app.config import settings
 config = context.config
 
 # Override sqlalchemy.url with the one from settings
-config.set_main_option("sqlalchemy.url", settings.database_url)
+# Replace % with %% to escape for ConfigParser
+database_url = settings.database_url.replace('%', '%%')
+config.set_main_option("sqlalchemy.url", database_url)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

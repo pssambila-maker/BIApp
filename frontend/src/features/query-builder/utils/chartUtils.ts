@@ -1,5 +1,5 @@
 import { QueryResponse } from '@/types/queryBuilder';
-import { ChartType, ChartConfiguration } from '@/types/visualization';
+import { ChartType, ChartConfiguration, ConditionalColorRule } from '@/types/visualization';
 import type { EChartsOption } from 'echarts';
 
 /**
@@ -28,7 +28,70 @@ export function inferChartConfig(response: QueryResponse): ChartConfiguration {
     y_axis_columns: finalMeasures.length > 0 ? finalMeasures : [],
     category_column: null,
     value_column: null,
+    sort_order: 'none',
+    sort_by: 'category',
+    color_mode: 'conditional',
+    conditional_colors: [
+      { condition: 'positive', color: '#5470c6' },
+      { condition: 'negative', color: '#ee6666' },
+      { condition: 'zero', color: '#91cc75' },
+    ],
   };
+}
+
+/**
+ * Sort data based on configuration
+ */
+function sortData(
+  data: any[],
+  xColumn: string,
+  yColumns: string[],
+  sortOrder: string,
+  sortBy: string
+): any[] {
+  if (sortOrder === 'none') return data;
+
+  const sorted = [...data];
+  const primaryYColumn = yColumns[0];
+
+  sorted.sort((a, b) => {
+    let compareValue = 0;
+
+    if (sortBy === 'category') {
+      // Sort by category (x-axis) alphabetically
+      const aVal = String(a[xColumn] || '');
+      const bVal = String(b[xColumn] || '');
+      compareValue = aVal.localeCompare(bVal);
+    } else {
+      // Sort by value (first y-axis column)
+      const aVal = Number(a[primaryYColumn] || 0);
+      const bVal = Number(b[primaryYColumn] || 0);
+      compareValue = aVal - bVal;
+    }
+
+    return sortOrder === 'ascending' ? compareValue : -compareValue;
+  });
+
+  return sorted;
+}
+
+/**
+ * Get color for a value based on conditional rules
+ */
+function getConditionalColor(
+  value: number,
+  rules: ConditionalColorRule[] = []
+): string | undefined {
+  if (value > 0) {
+    const rule = rules.find(r => r.condition === 'positive');
+    return rule?.color;
+  } else if (value < 0) {
+    const rule = rules.find(r => r.condition === 'negative');
+    return rule?.color;
+  } else {
+    const rule = rules.find(r => r.condition === 'zero');
+    return rule?.color;
+  }
 }
 
 /**
@@ -78,8 +141,21 @@ export function transformDataForECharts(
     };
   }
 
-  // Bar/Line/Area charts
-  const xAxisData = data.data.map(row => String(row[config.x_axis_column!] || ''));
+  // Bar/Line/Area charts with sorting
+  const sortedData = sortData(
+    data.data,
+    config.x_axis_column!,
+    config.y_axis_columns,
+    config.sort_order || 'none',
+    config.sort_by || 'category'
+  );
+
+  const xAxisData = sortedData.map(row => String(row[config.x_axis_column!] || ''));
+
+  // Determine if we should use conditional colors
+  const useConditionalColors = config.color_mode === 'conditional' &&
+                                chartType === 'bar' &&
+                                config.y_axis_columns.length === 1;
 
   return {
     tooltip: {
@@ -129,16 +205,33 @@ export function transformDataForECharts(
         }
       }
     },
-    series: config.y_axis_columns.map(col => ({
-      name: col,
-      type: chartType === 'area' ? 'line' : chartType,
-      data: data.data.map(row => Number(row[col] || 0)),
-      areaStyle: chartType === 'area' ? {} : undefined,
-      smooth: chartType === 'line' || chartType === 'area',
-      emphasis: {
-        focus: 'series'
-      },
-    })),
+    series: config.y_axis_columns.map(col => {
+      const seriesData = sortedData.map(row => Number(row[col] || 0));
+
+      // Apply conditional coloring if enabled
+      const seriesConfig: any = {
+        name: col,
+        type: chartType === 'area' ? 'line' : chartType,
+        data: seriesData,
+        areaStyle: chartType === 'area' ? {} : undefined,
+        smooth: chartType === 'line' || chartType === 'area',
+        emphasis: {
+          focus: 'series'
+        },
+      };
+
+      // Add conditional colors for bar charts with single series
+      if (useConditionalColors) {
+        seriesConfig.itemStyle = {
+          color: (params: any) => {
+            const value = params.value;
+            return getConditionalColor(value, config.conditional_colors) || '#5470c6';
+          }
+        };
+      }
+
+      return seriesConfig;
+    }),
   };
 }
 

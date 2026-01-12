@@ -7,6 +7,10 @@ import RegisterPage from './features/auth/RegisterPage';
 import SemanticCatalog from './features/semantic-catalog/SemanticCatalog';
 import DataSourcesPage from './features/data-sources/DataSourcesPage';
 import QueryBuilder from './features/query-builder/QueryBuilder';
+import DashboardList from './features/dashboards/DashboardList';
+import CreateDashboard from './features/dashboards/CreateDashboard';
+import DashboardBuilder from './features/dashboards/DashboardBuilder';
+import DashboardView from './features/dashboards/DashboardView';
 
 export default function App() {
   return (
@@ -23,6 +27,10 @@ export default function App() {
               <Route path="/catalog" element={<SemanticCatalog />} />
               <Route path="/data-sources" element={<DataSourcesPage />} />
               <Route path="/query-builder" element={<QueryBuilder />} />
+              <Route path="/dashboards" element={<DashboardList />} />
+              <Route path="/dashboards/new" element={<CreateDashboard />} />
+              <Route path="/dashboards/:id" element={<DashboardView />} />
+              <Route path="/dashboards/:id/edit" element={<DashboardBuilder />} />
               <Route path="/" element={<Navigate to="/catalog" replace />} />
             </Route>
           </Route>
