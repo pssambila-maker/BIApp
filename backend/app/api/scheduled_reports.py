@@ -291,14 +291,14 @@ async def run_scheduled_report_now(
             detail="Scheduled report not found"
         )
 
-    # TODO: Queue Celery task when implemented
-    # from app.tasks.reports import run_scheduled_report_task
-    # task = run_scheduled_report_task.delay(str(report_id))
+    # Queue Celery task for execution
+    from app.tasks.reports import run_scheduled_report_task
+    task = run_scheduled_report_task.delay(str(report_id))
 
     return ManualRunResponse(
-        task_id=None,  # Will be task.id when Celery implemented
+        task_id=task.id,
         status="queued",
-        message="Report execution queued. This feature will be fully enabled when Celery tasks are implemented.",
+        message=f"Report execution queued successfully. Task ID: {task.id}",
         scheduled_report_id=report_id
     )
 
